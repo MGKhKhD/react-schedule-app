@@ -50,7 +50,7 @@ class TodoToolTip extends Component {
                 this.state.showingTooltip && (
                   <BasicPortal>
                     <div style={style}>
-                      {`This task is blocked, not possible to complete without cmpleting blocking todos first.`}
+                      {`This task is blocked or has active subtasks.`}
                     </div>
                   </BasicPortal>
                 )}

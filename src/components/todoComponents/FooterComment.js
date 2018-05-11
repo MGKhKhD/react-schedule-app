@@ -4,8 +4,8 @@ import BasicComponents from "../BasicComponents";
 
 import { comment_items } from "../../types";
 
-const FooterComment = ({ onClick }) => (
-  <BasicComponents.Repeat numItems={comment_items.length}>
+const FooterComment = ({ onClick, totalTodos }) => (
+  <BasicComponents.Repeat numItems={totalTodos < 2 ? 2 : comment_items.length}>
     {idx => (
       <FotterItem
         key={idx}

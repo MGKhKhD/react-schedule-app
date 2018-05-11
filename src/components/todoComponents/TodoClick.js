@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getSubTasksOfTodo } from "../../selectors/todoSelectors";
 
 class TodoClick extends Component {
   constructor(props) {
@@ -27,10 +29,14 @@ class TodoClick extends Component {
       return;
     }
 
+    //check if todo has any active subtask
     //check if todo is blocked by an active todo
+    let actives = this.props.subTasksForTodo.filter(
+      ({ status }) => status === "active"
+    );
+
     const result = this.checkBlockingStatus({ ...this.props, idx });
-    if (!result) {
-      // todo is not blocked
+    if (!todo.completed && !result && actives.length === 0) {
       todoClick(idx);
       return;
     }
@@ -91,4 +97,8 @@ class TodoClick extends Component {
   }
 }
 
-export default TodoClick;
+const mapStateToProps = (state, ownProps) => ({
+  subTasksForTodo: getSubTasksOfTodo(state.todoState, ownProps.todo.id)
+});
+
+export default connect(mapStateToProps, null)(TodoClick);

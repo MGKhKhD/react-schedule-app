@@ -35,6 +35,11 @@ export const getTotalTodos = createSelector(
   (todosLength, archivedLength) => todosLength + archivedLength
 );
 
+export const getTotalUnArchivedTodos = createSelector(
+  [state => state.todos.todosIds.length],
+  todosLength => todosLength
+);
+
 export const getTotalCommentsForTodo = createSelector(
   [
     state => state.commentManagement,
@@ -121,15 +126,23 @@ export const getAllTodosByFilter = ({ todos, archiveTodos }, filter) => {
   }
 };
 
-export const getSubTasksOfTodo = (initState, todoId) => {
-  const state = initState.subTasks;
+const constructArray = (state, id) => {
   let result = [];
-  if (state !== {} && todoId !== -1) {
+  if (state !== {} && id !== -1) {
     for (let key in state) {
-      if (state[key].todoId === todoId) {
+      if (state[key].todoId === id) {
         result.push(state[key]);
       }
     }
   }
   return result;
 };
+
+const allSubTasksWithTodo = (state, id) => constructArray(state.subTasks, id);
+
+export const getSubTasksOfTodo = createSelector(
+  [allSubTasksWithTodo],
+  subTasks => {
+    return subTasks;
+  }
+);

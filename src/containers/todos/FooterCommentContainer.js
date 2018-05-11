@@ -2,11 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withHandlers } from "recompose";
 import { setCommentModify, deleteComment } from "../../actions/todoActions";
+import { getTotalUnArchivedTodos } from "../../selectors/todoSelectors";
 
 import FooterComment from "../../components/todoComponents/FooterComment";
 
+const mapStateToProps = state => ({
+  totalTodos: getTotalUnArchivedTodos(state.todoState)
+});
+
 const enhance = compose(
-  connect(null, { deleteComment, setCommentModify }),
+  connect(mapStateToProps, { deleteComment, setCommentModify }),
   withHandlers({
     footerClick: props => item => {
       if (item === "Delete") {
@@ -23,8 +28,8 @@ const enhance = compose(
   })
 );
 
-const FooterCommentContainer = enhance(({ footerClick }) => (
-  <FooterComment onClick={footerClick} />
+const FooterCommentContainer = enhance(({ footerClick, totalTodos }) => (
+  <FooterComment onClick={footerClick} totalTodos={totalTodos} />
 ));
 
 export default FooterCommentContainer;

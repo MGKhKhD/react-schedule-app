@@ -62,7 +62,7 @@ class AddTodo extends Component {
         <BasicComponents.FormWithInput
           inputRef={this.setInputRef}
           inputClassName="form-control mb-2 mr-sm-2 mb-sm-0"
-          buttonClassName="btn btn-primary mr-1"
+          buttonClassName="btn btn-primary btn-sm mr-1"
           placeholder="Add todo"
           name="todo"
           inputValue={this.state.todo}

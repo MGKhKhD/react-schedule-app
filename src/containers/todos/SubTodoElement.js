@@ -34,22 +34,14 @@ class SubTodoElement extends Component {
   };
 
   toggleSubTask = () => {
-    this.setState(
-      prevState => ({
-        ...prevState,
-        status: prevState.status === "completed" ? "active" : "completed"
-      }),
-      () => {
-        if (this.props.subTask !== {}) {
-          this.props.updateSubTask({
-            ...this.props.subTask,
-            status: this.state.status
-          });
-          return;
-        }
-        return;
-      }
-    );
+    const status = this.state.status === "completed" ? "active" : "completed";
+    this.setState({ ...this.state, status });
+    if (this.props.subTask !== {}) {
+      this.props.updateSubTask({
+        ...this.props.subTask,
+        status
+      });
+    }
   };
 
   closeTitleClick = () => {
