@@ -146,3 +146,30 @@ export const getSubTasksOfTodo = createSelector(
     return subTasks;
   }
 );
+
+const checkIfBlockedBy = (currentId, todoId, blockingInfo) => {
+  let result = false;
+  if (blockingInfo[todoId] && blockingInfo[todoId].indexOf(currentId) > -1) {
+    result = true;
+  }
+  return result;
+};
+
+const allBlockingTodosForTodo = (initState, id, todos) => {
+  const state = initState.blockingInfo;
+
+  const blokingTodos = [];
+  todos.forEach(todo => {
+    if (todo.id !== id && checkIfBlockedBy(id, todo.id, state)) {
+      blokingTodos.push(todo);
+    }
+  });
+  return blokingTodos;
+};
+
+export const getBlockingTodos = createSelector(
+  [allBlockingTodosForTodo],
+  blockingTodos => {
+    return blockingTodos;
+  }
+);

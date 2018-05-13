@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import BasicComponents from "../BasicComponents";
 
 class SubTaskDueDateInitSetup extends Component {
   constructor(props) {

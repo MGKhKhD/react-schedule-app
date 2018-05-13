@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BasicPortal } from "../BasicComponents";
 import TodoClick from "./TodoClick";
+import { shallowCompareStateAndPropsForUpdate } from "../../utils";
 
 const toolTipStyle = {
   position: "fixed",
@@ -15,6 +16,14 @@ class TodoToolTip extends Component {
   constructor(props) {
     super(props);
     this.state = { showingTooltip: true };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompareStateAndPropsForUpdate.call(
+      this,
+      nextProps,
+      nextState
+    );
   }
 
   componentDidMount() {

@@ -405,7 +405,7 @@ export function blockingInfo(state = {}, action) {
     case DELETE_TODO_FROM_BLOCKING_ENTRY: {
       let newState = {};
       for (let key in state) {
-        if (key !== action.idOfBlocking) {
+        if (parseInt(key, 10) !== action.idOfBlocking) {
           newState = { ...newState, [key]: [...state[key]] };
         }
       }
@@ -414,11 +414,16 @@ export function blockingInfo(state = {}, action) {
     case DELETE_TODO_FROM_BLOCKEDBY_LIST_OF_TODO: {
       let newState = {};
       for (let key in state) {
-        if (key === action.idOfBlockedBy) {
+        if (
+          parseInt(key, 10) === action.idOfBlocking &&
+          state[action.idOfBlocking].indexOf(action.idOfBlockedBy) > -1
+        ) {
           newState = {
             ...newState,
-            [key]: state[key].filter(idx => idx !== action.idOfBlocking)
+            [key]: state[key].filter(idx => idx !== action.idOfBlockedBy)
           };
+        } else {
+          newState = { ...newState, [key]: state[key] };
         }
       }
       return newState;
